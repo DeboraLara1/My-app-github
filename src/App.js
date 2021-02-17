@@ -1,31 +1,39 @@
 import React, { Component } from 'react';
 import AppContent from './compenents/AppContent';
+import ajax from '@fdaciuk/ajax';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      userinfo: {
-        photo: 'https://avatars.githubusercontent.com/u/59708083?v=4',
-        login: 'deboralara1',
-        username: 'Debora Lara',
-        repos: 12,
-        follwers: 10,
-        following: 10,
-      },
-      repos: [
-        {
-          name: 'Repo',
-          link: '#',
-        },
-      ],
-      starred: [
-        {
-          name: 'Repo',
-          link: '#',
-        },
-      ],
+      userinfo: null,
+      repos: [],
+      starred: [],
     };
+  }
+  handleSearch(e) {
+    const value = e.target.value;
+    const keyCode = e.which || e.keyCode;
+    const ENTER = 13;
+    // Aqui fazemos o requerimento a api via ajax para ter acesso as informações
+    if (keyCode === ENTER) {
+      ajax()
+        .get(`https://api.github.com/users/${value}`)
+        .then((result) => {
+          this.setState({
+            // aqui estamos o resultado do ajax e trazendo todas as informções do usuario que precisamos
+            userinfo: {
+              username: result.name,
+              photo: result.avatar_url,
+              login: result.login,
+              repos: result.public_repos,
+              follwers: result.follwers,
+              following: result.following,
+            },
+          });
+          console.log(result);
+        });
+    }
   }
   render() {
     return (
@@ -33,6 +41,8 @@ class App extends Component {
         userinfo={this.state.userinfo}
         repos={this.state.repos}
         starred={this.state.starred}
+        // trazendo a propriedade do componente search, para fezer a requisição a api
+        handleSearch={(e) => this.handleSearch(e)}
       />
     );
   }

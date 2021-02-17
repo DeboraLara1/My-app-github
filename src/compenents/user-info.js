@@ -21,9 +21,9 @@ const UserInfo = ({ userinfo }) => (
 );
 UserInfo.propTypes = {
   userinfo: PropTypes.shape({
+    username: PropTypes.string.isRequired,
     photo: PropTypes.string.isRequired,
     login: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
     repos: PropTypes.number.isRequired,
     follwers: PropTypes.array.isRequired,
     following: PropTypes.array.isRequired,
