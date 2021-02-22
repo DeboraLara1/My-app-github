@@ -35,14 +35,30 @@ class App extends Component {
         });
     }
   }
+  getRepos(type) {
+    return(e) => {
+      ajax().get(`https://api.github.com/users/deboralara1/${type}`)
+      .then((result) => {
+        this.setState({
+          [type]:[{
+            name: result[0].name,
+            link:result[0].html_url
+          }]
+        })
+      })
+    }
+  }
+  // getStarred(){}
   render() {
     return (
       <AppContent
         userinfo={this.state.userinfo}
         repos={this.state.repos}
         starred={this.state.starred}
-        // trazendo a propriedade do componente search, para fezer a requisição a api
+        // tra zendo a propriedade do componente search, para fezer a requisição a api
         handleSearch={(e) => this.handleSearch(e)}
+        getRepos={ this.getRepos('repos')}
+        getStarred={this.getRepos('starred')}
       />
     );
   }
