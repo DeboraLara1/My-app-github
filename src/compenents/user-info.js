@@ -14,7 +14,7 @@ const UserInfo = ({ userinfo }) => (
     </h1>
     <ul className="repos-info">
       <li>Repositório: {userinfo.repos}</li>
-      <li>Seguidores: {userinfo.follwers}</li>
+      <li>Seguidores: {userinfo.followers}</li>
       <li>Seguindo: {userinfo.following}</li>
     </ul>
   </div>
@@ -25,7 +25,7 @@ UserInfo.propTypes = {
     photo: PropTypes.string.isRequired,
     login: PropTypes.string.isRequired,
     repos: PropTypes.number.isRequired,
-    follwers: PropTypes.array.isRequired,
+    followers: PropTypes.array.isRequired,
     following: PropTypes.array.isRequired,
   }),
 };

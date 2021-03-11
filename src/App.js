@@ -27,9 +27,11 @@ class App extends Component {
               photo: result.avatar_url,
               login: result.login,
               repos: result.public_repos,
-              follwers: result.follwers,
+              followers: result.followers,
               following: result.following,
             },
+            repos: [],
+            starred: [],
           });
           console.log(result);
         });
@@ -37,13 +39,18 @@ class App extends Component {
   }
   getRepos(type) {
     return(e) => {
-      ajax().get(`https://api.github.com/users/deboralara1/${type}`)
+      // Criando uma variavel para as infomações virem de maneira dinamica para cada usuario pesquisado
+      const userName = this.state.userinfo.login
+
+      // Por meio da interpolação chamamos a variavel criada acima
+      ajax().get(`https://api.github.com/users/${userName}/${type}`)
       .then((result) => {
         this.setState({
-          [type]:[{
+          [type]:result.map((repo) =>{return{
             name: result[0].name,
             link:result[0].html_url
-          }]
+          }})
+          
         })
       })
     }
